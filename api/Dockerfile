@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["npx", "ts-node", "src/index.ts"]
+CMD ["npm", "run", "dev"]
