@@ -36,6 +36,8 @@ const getParent = (edges: Edge[], nodeId: string) => {
   return edge ? edge.source : null;
 };
 
+const nodeTypes = { collapsible: CollapsibleNode };
+
 const GraphResult: React.FC<Props> = ({ graph }) => {
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
 
@@ -48,6 +50,7 @@ const GraphResult: React.FC<Props> = ({ graph }) => {
 
   const { visibleNodes, visibleEdges } = useMemo(() => {
     const hiddenNodes = new Set<string>();
+
     const hideRecursive = (id: string) => {
       const children = getChildren(graph.newEdges, id);
       for (const child of children) {
@@ -55,6 +58,7 @@ const GraphResult: React.FC<Props> = ({ graph }) => {
         hideRecursive(child);
       }
     };
+
     Object.entries(collapsed).forEach(([id, isCollapsed]) => {
       if (isCollapsed) hideRecursive(id);
     });
@@ -97,26 +101,24 @@ const GraphResult: React.FC<Props> = ({ graph }) => {
       });
     });
 
-    const filteredNodes = graph.newNodes.filter((n) => !nodesToFilter.has(n.id));
+    const filteredNodes = graph.newNodes.filter((n) => !nodesToFilter.has(n.id) && !hiddenNodes.has(n.id));
 
-    const visibleNodes = filteredNodes
-      .filter((n) => !hiddenNodes.has(n.id))
-      .map((n) => ({
-        id: n.id,
-        data: {
-          label: n.data.label,
-          collapsed: !!collapsed[n.id],
-          onToggle: handleToggle,
-        },
-        position: n.position,
-        style: {
-          ...n.style,
-          textAlign: n.style.textAlign as "left" | "right" | "center" | "justify" | undefined,
-          backgroundColor: undefined,
-        },
-        type: "collapsible",
-        edges: rewiredEdges,
-      }));
+    const visibleNodes = filteredNodes.map((n) => ({
+      id: n.id,
+      data: {
+        label: n.data.label,
+        collapsed: !!collapsed[n.id],
+        onToggle: handleToggle,
+      },
+      position: n.position,
+      style: {
+        ...n.style,
+        textAlign: n.style.textAlign as "left" | "right" | "center" | "justify" | undefined,
+        backgroundColor: undefined,
+      },
+      type: "collapsible",
+      edges: rewiredEdges,
+    }));
 
     const visibleEdges = rewiredEdges
       .filter((e) => !hiddenNodes.has(e.source) && !hiddenNodes.has(e.target))
@@ -128,8 +130,6 @@ const GraphResult: React.FC<Props> = ({ graph }) => {
 
     return { visibleNodes, visibleEdges };
   }, [graph, collapsed, handleToggle]);
-
-  const nodeTypes = useMemo(() => ({ collapsible: CollapsibleNode }), []);
 
   return (
     <div
