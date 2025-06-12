@@ -1,35 +1,19 @@
-import { useState } from 'react';
-import './App.css';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import "./App.css";
+import { JsonInputForm } from "./components/JsonInputForm";
+import GraphResult from "./components/GraphResult";
+import { useJsonVisualizer } from "./hooks/useJsonVisualizer";
 
 function App() {
-	const [count, setCount] = useState(0);
+  const { jsonInput, setJsonInput, error, graph, loading, handleSubmit } = useJsonVisualizer();
 
-	return (
-		<>
-			<div className='flex flex-row items-center justify-center'>
-				<a href='https://vite.dev' target='_blank'>
-					<img src={viteLogo} className='logo' alt='Vite logo' />
-				</a>
-				<a href='https://react.dev' target='_blank'>
-					<img src={reactLogo} className='logo react' alt='React logo' />
-				</a>
-			</div>
-			<h1>Vite + React</h1>
-			<div className='card'>
-				<button onClick={() => setCount((count) => count + 1)}>
-					count is {count}
-				</button>
-				<p>
-					Edit <code>src/App.tsx</code> and save to test HMR
-				</p>
-			</div>
-			<p className='read-the-docs'>
-				Click on the Vite and React logos to learn more
-			</p>
-		</>
-	);
+  return (
+    <div className="mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">JSON Visualizer</h1>
+      <JsonInputForm jsonInput={jsonInput} setJsonInput={setJsonInput} loading={loading} handleSubmit={handleSubmit} />
+      {error && <div className="text-red-600 mb-2">{error}</div>}
+      <div className="w-full flex justify-center">{graph && <GraphResult graph={graph} />}</div>
+    </div>
+  );
 }
 
 export default App;
