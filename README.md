@@ -113,18 +113,18 @@ The Vite development server is configured to listen on `0.0.0.0` (to make it acc
 #### **`vite.config.ts`**:
 
 ```ts
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
 
 export default defineConfig({
-	server: {
-		host: '0.0.0.0', // Ensures it listens on all interfaces in Docker
-		hmr: {
-			host: 'localhost', // This will make sure HMR is enabled on localhost
-		},
-		watch: {
-			usePolling: true, // For file system watching inside Docker
-		},
-	},
+  server: {
+    host: "0.0.0.0", // Ensures it listens on all interfaces in Docker
+    hmr: {
+      host: "localhost", // This will make sure HMR is enabled on localhost
+    },
+    watch: {
+      usePolling: true, // For file system watching inside Docker
+    },
+  },
 });
 ```
 
@@ -203,22 +203,22 @@ As part of this technical test for a Frontend Developer position, you are expect
 
 ### Questions to Answer
 
-1. **How did you approach the development of the frontend visualization?**  
+1. **How did you approach the development of the frontend visualization?**
    Describe how you managed the complexity of rendering dynamic JSON data and ensuring the user interface is clear and efficient. What libraries or techniques did you use to make this process scalable?
 
-2. **What challenges did you face during the development process, and how did you overcome them?**  
+2. **What challenges did you face during the development process, and how did you overcome them?**
    Discuss any obstacles you encountered while working with React, React Flow, Tailwind CSS, or the API integration, and explain how you solved them.
 
-3. **How did you ensure that your solution can scale with larger datasets?**  
+3. **How did you ensure that your solution can scale with larger datasets?**
    What steps did you take to ensure the application remains performant and manageable as the size of the JSON data grows? Did you consider optimizations such as lazy loading, memoization, or virtualized rendering?
 
-4. **What strategies did you implement to enhance interactivity and the user experience?**  
+4. **What strategies did you implement to enhance interactivity and the user experience?**
    How did you make the visualization interactive, and what user interface patterns or features did you use to improve the overall user experience?
 
-5. **How would you improve the app’s scalability and performance for future updates or features?**  
+5. **How would you improve the app’s scalability and performance for future updates or features?**
    If this project were to evolve or handle even larger and more complex datasets, how would you approach enhancing its scalability and performance?
 
-6. **How did you identify and resolve the hidden bug in the API on the frontend side?**  
+6. **How did you identify and resolve the hidden bug in the API on the frontend side?**
    Describe the process you used to identify the bug, how it impacted the data visualization, and how you fixed it within the frontend code.
 
 ---
@@ -234,3 +234,17 @@ As part of this technical test for a Frontend Developer position, you are expect
 **Expected time to complete the project: 4 hours.**
 
 Good luck and have fun!
+
+## Responses
+
+1. For the visualization, I chose a simple and straightforward solution: a textarea where the user can paste their JSON, and then I use React Flow to display the result in a visual and intuitive way. This makes the app easy to use, quick to understand, and it fulfills its purpose.
+
+2. The main challenge was adapting the JSON to the nodes and edges structure required by React Flow, especially with nested or complex data. I solved this by searching for examples and adapting existing code to my needs, making small adjustments until everything worked as expected.
+
+3. To keep the app performant with larger datasets, I kept the rendering logic as simple as possible and avoided unnecessary re-renders. Since React Flow is optimized for many nodes, I relied on its performance and only updated the graph when the input JSON changed. If needed, I would consider adding memoization or virtualized rendering for even bigger data.
+
+4. To make the visualization interactive, I added hover effects to highlight nodes and edges, allowed users to expand or collapse nodes, and used tooltips to show extra information. These features make the experience more intuitive and user-friendly.
+
+5. Para mejorar a futuro, agregaría memoización y renderizado virtualizado para manejar datasets más grandes. También consideraría dividir el grafo en partes más pequeñas y cargarlas bajo demanda, y usar web workers para procesar datos pesados sin afectar la interfaz.
+
+6. I noticed the bug when the visualization showed duplicated nodes. I checked the JSON response from the API and saw that some nodes were repeated. To fix it, I filtered out the duplicates in the frontend before rendering, so the visualization is always correct.
