@@ -86,7 +86,7 @@ const CollapsibleNode: React.FC<CollapsibleNodeProps> = ({ id, data, isConnectab
       onMouseLeave={() => setHovered(false)}
     >
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
-        <span style={{ flex: 1, overflowWrap: "break-word", textAlign: "left" }}>{displayLabel}</span>
+        <span style={{ flex: 1, overflowWrap: "break-word" }}>{displayLabel}</span>
         {hasChildren && (
           <span style={{ marginLeft: 8, fontWeight: "bold", fontSize: 18, color: "#60a5fa" }}>
             {data.collapsed ? "+" : "-"}
