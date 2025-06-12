@@ -1,5 +1,6 @@
 import React from "react";
 import { Handle, NodeProps, Position } from "reactflow";
+import { Tooltip } from "react-tooltip";
 
 interface CollapsibleNodeProps extends NodeProps {
   data: {
@@ -74,6 +75,8 @@ const CollapsibleNode: React.FC<CollapsibleNodeProps> = ({ id, data, isConnectab
       }}
       onClick={hasChildren ? () => data.onToggle(id) : undefined}
       aria-label={hasChildren ? (data.collapsed ? "Expandir" : "Colapsar") : undefined}
+      data-tooltip-id={`tooltip-${id}`}
+      data-tooltip-content={data.label}
     >
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
         <span style={{ flex: 1, overflowWrap: "break-word", textAlign: "left" }}>{displayLabel}</span>
@@ -85,6 +88,7 @@ const CollapsibleNode: React.FC<CollapsibleNodeProps> = ({ id, data, isConnectab
       </div>
       <Handle type="target" position={Position.Top} isConnectable={isConnectable} />
       <Handle type="source" position={Position.Bottom} isConnectable={isConnectable} />
+      <Tooltip id={`tooltip-${id}`} place="top" />
     </div>
   );
 };
