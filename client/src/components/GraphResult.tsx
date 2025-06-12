@@ -30,7 +30,6 @@ interface Props {
 }
 
 const getChildren = (edges: Edge[], nodeId: string) => edges.filter((e) => e.source === nodeId).map((e) => e.target);
-
 const getParent = (edges: Edge[], nodeId: string) => {
   const edge = edges.find((e) => e.target === nodeId);
   return edge ? edge.source : null;
@@ -41,16 +40,12 @@ const nodeTypes = { collapsible: CollapsibleNode };
 const GraphResult: React.FC<Props> = ({ graph }) => {
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
 
-  const handleToggle = useCallback(
-    (id: string) => {
-      setCollapsed((c) => ({ ...c, [id]: !c[id] }));
-    },
-    [setCollapsed]
-  );
+  const handleToggle = useCallback((id: string) => {
+    setCollapsed((c) => ({ ...c, [id]: !c[id] }));
+  }, []);
 
   const { visibleNodes, visibleEdges } = useMemo(() => {
     const hiddenNodes = new Set<string>();
-
     const hideRecursive = (id: string) => {
       const children = getChildren(graph.newEdges, id);
       for (const child of children) {
@@ -58,7 +53,6 @@ const GraphResult: React.FC<Props> = ({ graph }) => {
         hideRecursive(child);
       }
     };
-
     Object.entries(collapsed).forEach(([id, isCollapsed]) => {
       if (isCollapsed) hideRecursive(id);
     });
