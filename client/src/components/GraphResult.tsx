@@ -127,11 +127,11 @@ const GraphResult: React.FC<Props> = ({ graph }) => {
 
   return (
     <div
-      className="bg-gray-900 p-4 rounded-xl mt-4 shadow-lg border border-gray-700 flex flex-col items-center justify-center mx-auto"
+      className="bg-gray-900 p-1 rounded-xl mt-4 shadow-lg border-2 border-slate-700 flex flex-col items-center justify-center mx-auto"
       style={{ height: 600, minHeight: 400, width: "80vw", maxWidth: "1200px" }}
     >
       <div className="flex-1 w-full rounded overflow-hidden bg-gray-800 flex items-center justify-center">
-        <ReactFlow nodes={visibleNodes} edges={visibleEdges} fitView nodeTypes={nodeTypes}>
+        <ReactFlow nodes={visibleNodes} edges={visibleEdges} fitView nodeTypes={nodeTypes} className="bg-slate-800">
           <MiniMap />
           <Controls />
           <Background gap={10} />

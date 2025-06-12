@@ -7,11 +7,13 @@ function App() {
   const { jsonInput, setJsonInput, error, graph, loading, handleSubmit } = useJsonVisualizer();
 
   return (
-    <div className="mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">JSON Visualizer</h1>
+    <div className="min-h-screen flex flex-col p-4">
+      <h1 className="text-2xl font-bold mb-4 text-slate-100">JSON Visualizer</h1>
       <JsonInputForm jsonInput={jsonInput} setJsonInput={setJsonInput} loading={loading} handleSubmit={handleSubmit} />
       {error && <div className="text-red-600 mb-2">{error}</div>}
-      <div className="w-full flex justify-center">{graph && <GraphResult graph={graph} />}</div>
+      <div className="w-full flex justify-center">
+        {<GraphResult graph={graph || { newNodes: [], newEdges: [] }} />}
+      </div>
     </div>
   );
 }
